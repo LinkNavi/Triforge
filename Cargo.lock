@@ -1794,6 +1794,7 @@ dependencies = [
  "thiserror",
  "tokio",
  "toml",
+ "url",
  "urlencoding",
  "walkdir",
 ]

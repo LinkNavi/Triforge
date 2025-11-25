@@ -23,7 +23,7 @@ impl Default for AppConfig {
             username: None,
             default_private: false,
             use_tor: false,
-            tor_proxy: "socks5://127.0.0.1:9050".to_string(),
+            tor_proxy: "socks5h://127.0.0.1:9050".to_string(),
             verify_ssl: true,
         }
     }
