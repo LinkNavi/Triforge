@@ -1,8 +1,9 @@
-// src/api.rs
+// src/api.rs - API client with Tor support
 use crate::config::AppConfig;
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
+// Request/Response types (keeping existing types)
 #[derive(Debug, Serialize)]
 pub struct CreateRepoRequest {
     pub name: String,
@@ -151,17 +152,20 @@ impl ApiClient {
         Self { config, client }
     }
 
+    /// Build HTTP client with Tor support
     fn build_client(config: &AppConfig) -> reqwest::Client {
         let mut builder = reqwest::Client::builder()
-            .timeout(Duration::from_secs(60))
+            .timeout(Duration::from_secs(60)) // Longer timeout for Tor
             .connect_timeout(Duration::from_secs(30));
 
+        // Configure Tor proxy if enabled
         if config.use_tor {
             if let Ok(proxy) = reqwest::Proxy::all(&config.tor_proxy) {
                 builder = builder.proxy(proxy);
             }
         }
 
+        // Disable SSL verification for onion services
         if !config.verify_ssl {
             builder = builder.danger_accept_invalid_certs(true);
         }
@@ -169,6 +173,7 @@ impl ApiClient {
         builder.build().expect("Failed to build HTTP client")
     }
 
+    // Authentication
     pub async fn login(&self, username: &str, password: &str) -> anyhow::Result<LoginResponse> {
         let url = format!("{}/api/auth/login", self.config.hyrule_server);
         let req = LoginRequest {
@@ -207,6 +212,7 @@ impl ApiClient {
             .map_err(|e| anyhow::anyhow!("Parse error: {}. Body: {}", e, body_text))
     }
 
+    // Repository operations
     pub async fn create_repo(&self, req: CreateRepoRequest) -> anyhow::Result<CreateRepoResponse> {
         let token = self
             .config
@@ -381,6 +387,9 @@ impl ApiClient {
 
         Ok(())
     }
+
+    // Additional methods (star, unstar, pin, unpin, fork, tags, search, etc.)
+    // ... keeping all existing methods ...
     
     pub async fn star_repo(&self, repo_hash: &str) -> anyhow::Result<()> {
         let token = self.config.auth_token.as_ref()

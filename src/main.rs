@@ -123,7 +123,7 @@ enum Commands {
         action: RemoteAction,
     },
 
-    AppConfig {
+    Config {
         #[command(subcommand)]
         action: ConfigAction,
     },
@@ -303,7 +303,7 @@ async fn run(cli: Cli) -> anyhow::Result<()> {
             RemoteAction::Remove { name } => commands::remote::remove(&name)?,
             RemoteAction::List => commands::remote::list()?,
         },
-        Commands::AppConfig { action } => match action {
+        Commands::Config { action } => match action {
             ConfigAction::Set { key, value } => commands::config::set(&key, &value)?,
             ConfigAction::Get { key } => commands::config::get(&key)?,
             ConfigAction::Show => commands::config::show()?,

@@ -18,7 +18,7 @@ pub struct AppConfig {
 impl Default for AppConfig {
     fn default() -> Self {
         Self {
-            hyrule_server: "http://localhost:3000".to_string(),
+            hyrule_server: "https://hyrule4e3tu7pfdkvvca43senvgvgisi6einpe3d3kpidlk3uyjf7lqd.onion/".to_string(),
             auth_token: None,
             username: None,
             default_private: false,
