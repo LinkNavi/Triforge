@@ -175,7 +175,7 @@ pub async fn execute(
         println!("{} Possible issues:", "→".blue());
         println!("  • Server might not be running or reachable");
         println!("  • Check server URL: {}", "triforge config show".cyan());
-        println!("  • Try setting correct server: {}", "triforge config set server http://localhost:3000".cyan());
+        println!("  • Try setting correct server: {}", "triforge config set server http://hyrule4e3tu7pfdkvvca43senvgvgisi6einpe3d3kpidlk3uyjf7lqd.onion".cyan());
         println!();
         anyhow::bail!("Push failed - no objects uploaded");
     }
@@ -204,7 +204,7 @@ pub async fn execute(
     println!("  {}", format!("triforge clone {}", response.repo_hash).cyan());
     println!();
     println!("{} View on web:", "→".blue());
-    println!("  {}", format!("http://localhost:3000/r/{}", response.repo_hash).cyan());
+    println!("  {}", format!("http://hyrule4e3tu7pfdkvvca43senvgvgisi6einpe3d3kpidlk3uyjf7lqd.onion/r/{}", response.repo_hash).cyan());
     println!();
     
     Ok(())
